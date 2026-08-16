@@ -1,0 +1,47 @@
+# `come` and `go` are where the idiom lives: `come a long way`, `go a long way`.
+# Any other verb takes `along` as its particle and `way` as an intensifier, so
+# "they get along way too well" and "the scenes dragged along way too long" are correct.
+expr comeGo [come, comes, came, coming, go, goes, going, went, gone]
+
+expr main <[(@comeGo along way), (along way to go)], (along way)>
+
+let message "Use `a long way`, not `along way`."
+let description "Corrects `along way` to `a long way` in `come/go a long way` and `a long way to go`."
+let kind "Grammar"
+let becomes "a long way"
+let strategy "MatchCase"
+
+test "Kevin Rudd has come along way, he has matured and learned about the world." "Kevin Rudd has come a long way, he has matured and learned about the world."
+test "I've come along way since those times." "I've come a long way since those times."
+test "The tooling for frontend development has come along way too." "The tooling for frontend development has come a long way too."
+test "A serious push towards exchanges and wallets supporting bech32 would go along way too." "A serious push towards exchanges and wallets supporting bech32 would go a long way too."
+test "I still have along way to go but I'm impressed by my work here." "I still have a long way to go but I'm impressed by my work here."
+test "Functional programming goes along way towards voiding the problems of state-derived complexity." "Functional programming goes a long way towards voiding the problems of state-derived complexity."
+test "HIS VICTORY AND PRIZE MONEY WILL GO ALONG WAY TOWARD HELPING HIS FAMILY." "HIS VICTORY AND PRIZE MONEY WILL GO A LONG WAY TOWARD HELPING HIS FAMILY."
+test "Not without going along way inland." "Not without going a long way inland."
+test "This will go along way toward fixing the problem." "This will go a long way toward fixing the problem."
+test "We came along way in a short time." "We came a long way in a short time."
+test "Harper has come along way since version 1." "Harper has come a long way since version 1."
+test "It goes along way to explaining the delay." "It goes a long way to explaining the delay."
+test "We still have along way to go before launch." "We still have a long way to go before launch."
+test "There is along way to go." "There is a long way to go."
+test "Along way to go before this ships." "A long way to go before this ships."
+test "A little kindness goes along way." "A little kindness goes a long way."
+
+# `along` is the verb's particle here and `way` is the intensifier, so these are all correct.
+
+allows "These two get along way too well."
+allows "We actually get along way better than most."
+allows "I'm sure most people would get along way better in person."
+allows "Sometimes, the scenes dragged along way too long."
+allows "It seemed to be pounding along way too fast."
+allows "That module brings along way too many dependencies."
+allows "Followed along way too long, and it's astonishing."
+allows "The project dragged along way past the deadline."
+
+allows "He came a long way."
+allows "We walked along the way we came."
+
+# Accepted gap: `come`/`go` plus intensifier `way`, as in "coming along way faster than
+# planned", is still flagged. It is rare next to the misuse; `along way toward` alone
+# outnumbers `along way beyond` and `along way past` by two orders of magnitude.
