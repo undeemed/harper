@@ -1,0 +1,58 @@
+# `Size` is already a quantity, so `amount of size` says the same thing twice.
+# The one reading that is fine is `amount of size <noun>`, where `size` modifies
+# the noun that follows it: "size information", "size pairs", "size bloat".
+# So the rule only fires when `size` ends the noun phrase, which it does when the
+# next token is a preposition, conjunction, determiner, pronoun, verb, or the end
+# of the sentence. `AUX` is in the list because the tagger reports the copula as
+# `AUX` in some sentences and `VERB` in others.
+expr follows [ADP, CCONJ, SCONJ, PRON, DET, VERB, AUX]
+
+expr main <[(!an amount of size @follows), (!an amount of size[., ?])], (amount of size)>
+
+let message "Use `size` on its own."
+let description "Corrects the redundant `amount of size` to `size`."
+let kind "Redundancy"
+let becomes "size"
+let strategy "MatchCase"
+
+test "I don't have that much amount of size." "I don't have that much size."
+test "Equal steps in scale do not add the same amount of size." "Equal steps in scale do not add the same size."
+test "The log file reaches certain amount of size." "The log file reaches certain size."
+test "So that it does not depend on the amount of size of the node?" "So that it does not depend on the size of the node?"
+test "There is a minimum amount of size required for file system structures." "There is a minimum size required for file system structures."
+test "Determining real amount of size used in directory with hard links." "Determining real size used in directory with hard links."
+test "Reports the amount of size in bytes taken up by hardware morph textures." "Reports the size in bytes taken up by hardware morph textures."
+test "It needs significant amount of size and randomness to make them hard to guess." "It needs significant size and randomness to make them hard to guess."
+test "This would still limit the amount of size a single request could buffer to disk." "This would still limit the size a single request could buffer to disk."
+test "I think it is related to the amount of size I allocate for the db and log." "I think it is related to the size I allocate for the db and log."
+test "I need a function to count amount of size from column C and D automatically." "I need a function to count size from column C and D automatically."
+test "This job will consume your storage quota in the amount of size of git-svn clone." "This job will consume your storage quota in the size of git-svn clone."
+test "I tend to get big files for the amount of size I have available." "I tend to get big files for the size I have available."
+test "Double the hardware resources typically means double the amount of size and performance." "Double the hardware resources typically means double the size and performance."
+test "WebP can save incredible amount of size if you have many images in your app." "WebP can save incredible size if you have many images in your app."
+test "It derives its name from someone constrained by a given amount of size of knapsack." "It derives its name from someone constrained by a given size of knapsack."
+test "Adding -g added huge amount of size to the debug builds." "Adding -g added huge size to the debug builds."
+test "I DON'T HAVE THAT MUCH AMOUNT OF SIZE." "I DON'T HAVE THAT MUCH SIZE."
+
+# `Size` modifies the noun after it in all of these, so `amount of` is doing real
+# work and the phrase is correct.
+
+allows "It's impossible for this API to exist and not leak some amount of size information."
+allows "How to calculate the unique amount of size pairs for a given range."
+allows "Some amount of size bloat is also acceptable."
+allows "There was a significant amount of size difference after loading two dump files."
+allows "We budgeted a fixed amount of size overhead per record."
+
+allows "The amount of data written to disk stays small."
+allows "That is a fair amount of work for one afternoon."
+allows "The size of the index grew by four megabytes."
+
+# Accepted gap: `an amount of size` is left alone. The fix there has to change the
+# article as well, and the natural rewrite is `an amount`, not `a size`, so it is a
+# different correction from the one this rule makes.
+
+allows "I want to trade for an amount of size that is equivalent to 100 in cash."
+
+# Second accepted gap, and it falls out of the first: the `!an` guard needs a token
+# in front of `amount`, so a sentence that opens with `Amount of size ...` is not
+# flagged. Every example in the report has the phrase mid-sentence.

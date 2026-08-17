@@ -2859,6 +2859,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AmountOfSize",
+								"state": true,
+								"label": "Amount Of Size"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AnAnother",
 								"state": true,
 								"label": "An Another"
