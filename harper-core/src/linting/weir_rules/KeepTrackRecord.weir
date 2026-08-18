@@ -1,0 +1,57 @@
+# `Keep track of` is the idiom for monitoring something. `Track record` is a
+# separate noun meaning past performance. Writers blend the two into
+# `keep track record of ...`, which is the idiom with a stray `record` in it.
+#
+# The blend is only unambiguous when nothing sits between the verb and `track`.
+# `Keep a track record of steady growth` is ordinary English, because `a`
+# forces the noun-phrase reading, so any determiner or adjective is left alone.
+expr keep [keep, keeps, keeping, kept]
+
+expr main <(@keep track record), (track record)>
+
+let message "`Keep track` is the idiom here; `track record` means past performance."
+let description "Corrects the redundant `keep track record` to `keep track`."
+let kind "Redundancy"
+let becomes "track"
+let strategy "MatchCase"
+
+test "This repository is created to keep track record of my journey of leaning a new language." "This repository is created to keep track of my journey of leaning a new language."
+test "Users can keep track record of their finances using the django setup at backend." "Users can keep track of their finances using the django setup at backend."
+test "That is enough to satisfy our own legal obligations of keeping track record of terms acceptance." "That is enough to satisfy our own legal obligations of keeping track of terms acceptance."
+test "Also keep track record of the employees." "Also keep track of the employees."
+test "This can be problematic if we are keeping track record offchain." "This can be problematic if we are keeping track offchain."
+test "Obviously there is option to sign in and sign up to keep track record." "Obviously there is option to sign in and sign up to keep track."
+test "This projects keeps track record of any product starting from manufacturer to customer." "This projects keeps track of any product starting from manufacturer to customer."
+test "Helps keeping track record of reports and stay connected with your potential customers." "Helps keeping track of reports and stay connected with your potential customers."
+test "It helps to keep track record of students and teachers profiles." "It helps to keep track of students and teachers profiles."
+test "The team kept track record of every shipment for a year." "The team kept track of every shipment for a year."
+test "ALSO KEEP TRACK RECORD OF THE EMPLOYEES." "ALSO KEEP TRACK OF THE EMPLOYEES."
+
+# A determiner or an adjective in front of `track record` makes it a noun
+# phrase, and `keep a track record of ...` is then correct English. Those are
+# left alone even when the writer probably meant `keep track of`.
+
+allows "Is there any way I can find all my discussions in my profile, or do I have to keep a track record with the links myself?"
+allows "The library which keeps the track record for all the co-ordinate frames over time."
+allows "She keeps a clean track record after twenty years of service."
+allows "The company kept an excellent track record of steady growth."
+
+# The plural is a different judgement call. The reporter says so, and
+# `keep track records of visitors` can be read as keeping records, so the rule
+# only matches the singular `record`.
+
+allows "Online Visitor Portal to keep track records of visitors in any organization."
+allows "Keep track records of all mileage information and fuel consumption."
+allows "Thus, monitoring and keeping track records of the electricity consumption is a tedious task."
+
+# Neither of the report's two remaining cases contains the phrase at all, but
+# both are worth a test because they are what a looser pattern would break on.
+
+allows "This project also keeps and tracks records of departments, hospital charges and diseases."
+allows "Keep track / record of your tasks using HTML, JS and CSS."
+
+# Ordinary correct uses of each phrase on its own.
+
+allows "The company has a clean track record in this sector."
+allows "He has a proven track record in sales."
+allows "Keep track of your expenses every month."

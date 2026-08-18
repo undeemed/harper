@@ -3048,6 +3048,13 @@
 						},
 						{
 							"Bool": {
+								"name": "KeepTrackRecord",
+								"state": true,
+								"label": "Keep Track Record"
+							}
+						},
+						{
+							"Bool": {
 								"name": "KindOf",
 								"state": true,
 								"label": "Kind Of"
