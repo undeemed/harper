@@ -1,0 +1,70 @@
+# `As though` already introduces the comparison, so a following `that` is a
+# stray relative pronoun: `it seems as though that you have ...`.
+#
+# The trap is that `that` after `as though` is often a real demonstrative, as in
+# `as though that were somehow relevant`, where `that` is the subject. Nothing in
+# the surface string separates the two, so the rule looks at the word after
+# `that` instead. A demonstrative `that` heads a noun phrase, so it is followed
+# by a verb, an auxiliary, an adverb, an adjective or a noun. It can never be
+# followed by a determiner, a pronoun or a subordinating conjunction. Those three
+# are the only cases this rule fires on, so an unknown or untagged word produces
+# no lint.
+#
+# `when` is in the list by name because the tagger returns ADV for it, and ADV as
+# a whole is not safe: `as though that somehow made sense` is correct English.
+expr follows [DET, PRON, SCONJ, when]
+
+expr main <(as though that @follows), (though that)>
+
+let message "`As though` does not take `that`."
+let description "Removes the stray `that` from `as though that`, keeping the demonstrative use intact."
+let kind "Grammar"
+let becomes "though"
+let strategy "MatchCase"
+
+test "It appears as though that this use of the logging module had worked in the past but no longer does." "It appears as though this use of the logging module had worked in the past but no longer does."
+test "But as an end user it appears as though that the command just has a readonly alias array." "But as an end user it appears as though the command just has a readonly alias array."
+test "It looks as though that when the seed is crafted in the refined storage system, it does not apply metadata." "It looks as though when the seed is crafted in the refined storage system, it does not apply metadata."
+test "It seems as though that you have used up all your inodes on your hosting plan." "It seems as though you have used up all your inodes on your hosting plan."
+test "The reality of this seems as though that if I don't want the second screen to appear again, I must not call addToBackStack." "The reality of this seems as though if I don't want the second screen to appear again, I must not call addToBackStack."
+test "Sorry if I'm not descriptive enough, I feel as though that I am pretty bad at explaining things but tried my best." "Sorry if I'm not descriptive enough, I feel as though I am pretty bad at explaining things but tried my best."
+test "I fear as though that the series is quickly fading out of the public consciousness." "I fear as though the series is quickly fading out of the public consciousness."
+test "I feel as though that when I completely clear my throat I sing way better." "I feel as though when I completely clear my throat I sing way better."
+test "I guess I mean it's as though that I seem to really notice the effect while I'm doing things." "I guess I mean it's as though I seem to really notice the effect while I'm doing things."
+test "I feel as though that we as a community must now refer to the new awakened Mono as Raiden Mono." "I feel as though we as a community must now refer to the new awakened Mono as Raiden Mono."
+
+# Demonstrative `that`, all six of the false positives listed in the report.
+
+allows "I feel as though that world model strongly correlates with memory."
+allows "The author declares that software composability is the solution as though that is a given fact."
+allows "Repeatedly citing screenshots of C# and Java code, as though that were somehow relevant in any way."
+allows "However, I feel as though that is a terrible idea."
+allows "It seemed as though that was a pretty integral part required for training."
+allows "These people also use Kleenex as the plural, as though that somehow made sense."
+
+# The report also lists this one, where the real problem is a missing `be`.
+# Removing `that` would hide the sentence's actual error.
+
+allows "I feel as though that would more accurate."
+
+# Controls for the tags that are deliberately left out. Each of these is correct
+# English, and each would break if the matching tag were added to `@follows`.
+
+allows "She smiled as though that mattered to nobody."
+allows "It looked as though that old bridge would finally collapse."
+allows "They shrugged as though that answer settled everything."
+allows "He spoke as though that had never happened."
+allows "It felt as though the ground had shifted."
+
+# Known false negatives, kept here so the gaps stay visible. Each is a real
+# mistake from the report that the rule cannot reach without also breaking one of
+# the controls above.
+
+allows "A function type whose return value is void is treated as though that void were unknown."
+allows "It seems as though that trying this, I get stuck at a decimal number far below."
+allows "Do you ever feel as though that there's much more to life than what you see?"
+allows "Have you felt as though that games have been written by the same exact people?"
+allows "Do ancient stonebuilders talk about their building projects as though that have no precedent?"
+allows "Well it's not as though that smells would make Hasu this wild."
+allows "It's as though that Henderson has memorized virtually the whole Bible."
+allows "We don't feel as though that impending doom is personal but rather a collective doom."

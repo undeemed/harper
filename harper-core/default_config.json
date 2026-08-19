@@ -3317,6 +3317,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AsThoughThat",
+								"state": true,
+								"label": "As Though That"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AsToInterrogative",
 								"state": true,
 								"label": "As To Interrogative"
